@@ -1,5 +1,7 @@
 import {create} from 'zustand';
 import {Product} from './interfaces';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { zustandStorage } from './mmkv';
 
 export interface CartState {
   products: Array<Product & {quantity: number}>;
@@ -9,7 +11,7 @@ export interface CartState {
   items: number;
 }
 
-const useCartStore = create<CartState>(set => ({
+const useCartStore = create<CartState>()(persist((set, get) => ({
   products: [],
   items: 0,
   addProduct: (product: Product) =>
@@ -53,8 +55,13 @@ const useCartStore = create<CartState>(set => ({
         products: [],
       };
     }),
-}));
+}),
+{
+  name: 'cart-storage',
+  storage: createJSONStorage(() => zustandStorage),
+}
+));
 
 export default useCartStore;
 
-// 37: 00
+// 1:01: 00

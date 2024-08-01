@@ -3,11 +3,12 @@ import { FlatList, Image, ListRenderItem, StyleSheet, Text, TouchableOpacity, Vi
 import data from '../assets/data.json';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useCartStore from "../zustand/store/cartStore";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function TabOneScreen(): JSX.Element {
+  const navigation = useNavigation();
   const {addProduct, reduceProduct} = useCartStore();
-  // this for tab navigation 
   const {items} = useCartStore();
 
   const renderItem: ListRenderItem<any> = ({item}) => (
@@ -30,10 +31,10 @@ export default function TabOneScreen(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.number}>
+      <TouchableOpacity style={styles.number} onPress={() => navigation.navigate('Modal')}>
         <Text style={styles.text}>{items}</Text>
       </TouchableOpacity>
-      <FlatList data={data} renderItem={renderItem}/>
+      <FlatList data={data} renderItem={renderItem} showsVerticalScrollIndicator={false}/>
     </View>
   )
 }

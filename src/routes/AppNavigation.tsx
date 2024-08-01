@@ -1,19 +1,23 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigation from "./TabNavigation";
-import TabOneScreen from "../screens/TabOneScreen";
+import useCartStore from "../zustand/store/cartStore";
+import Modal from "../screens/Modal";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
+    const {items} = useCartStore();
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
           name="Home"
-          component={TabNavigation}
-          options={{ headerShown: false }}
-        />
+          component={TabNavigation} options={{headerShown: false}}/>
+      <Stack.Screen
+          name="Modal"
+          component={Modal} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
