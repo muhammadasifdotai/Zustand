@@ -3,11 +3,12 @@ import { FlatList, Image, ListRenderItem, StyleSheet, Text, TouchableOpacity, Vi
 import data from '../assets/data.json';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useCartStore from "../zustand/store/cartStore";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../routes/types";
 
 
 export default function TabOneScreen(): JSX.Element {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {addProduct, reduceProduct} = useCartStore();
   const {items} = useCartStore();
 
@@ -41,16 +42,16 @@ export default function TabOneScreen(): JSX.Element {
 
 const styles = StyleSheet.create({
   number: {
-    alignSelf: 'flex-end',
     paddingRight: 20,
     paddingTop: 11,
     paddingBottom: 33,
     backgroundColor: 'cyan',
   },
   text: {
+    alignSelf: 'flex-end',
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white'
+    color: 'white',
   },
   container: {
     flex: 1,
